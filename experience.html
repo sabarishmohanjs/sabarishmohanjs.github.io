@@ -95,6 +95,7 @@
       flex-shrink: 0;
       position: relative;
     }
+    .exp-icon.eysip { background: rgba(0,229,160,0.08); border: 1px solid rgba(0,229,160,0.2); }
     .exp-icon.eyantra { background: rgba(0,229,160,0.08); border: 1px solid rgba(0,229,160,0.2); }
     .exp-icon.dvcon { background: rgba(124,106,247,0.08); border: 1px solid rgba(124,106,247,0.2); }
     .exp-icon.fossee { background: rgba(239,163,39,0.08); border: 1px solid rgba(239,163,39,0.2); }
@@ -117,6 +118,9 @@
     .exp-story p strong { color: var(--text); font-weight: 500; }
     .exp-story p:last-child { margin-bottom: 0; }
 
+    .exp-subhead { font-family: 'Syne', sans-serif; font-size: 1.02rem; font-weight: 700; color: var(--text); margin: 2rem 0 1rem; letter-spacing: -0.01em; display: flex; align-items: center; gap: 0.6rem; }
+    .exp-subhead::before { content: ''; width: 3px; height: 1.1rem; background: var(--accent2); border-radius: 2px; }
+
     .exp-highlights { margin-bottom: 2rem; }
     .exp-highlights-title { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.6rem; }
     .exp-highlights-title::after { content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--accent); opacity: 0.4; }
@@ -137,9 +141,10 @@
     /* Quote block */
     .exp-quote { margin: 1.5rem 0; padding: 1.2rem 1.5rem; border-left: 2px solid var(--accent2); background: rgba(124,106,247,0.04); border-radius: 0 8px 8px 0; }
     .exp-quote p { font-size: 0.93rem; color: var(--text); line-height: 1.75; font-style: italic; font-weight: 300; }
+    .exp-quote.green-quote { border-left-color: var(--accent); background: rgba(0,229,160,0.04); }
 
     /* Photo gallery */
-    .photo-gallery { display: flex; gap: 0.75rem; margin-bottom: 2rem; }
+    .photo-gallery { display: flex; gap: 0.75rem; margin-bottom: 2rem; flex-wrap: wrap; }
     .photo-item { position: relative; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: var(--bg); width: 140px; height: 140px; flex-shrink: 0; }
     .photo-item.wide { width: 220px; height: 140px; }
     .photo-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; filter: brightness(0.92); }
@@ -190,14 +195,126 @@
       </h1>
       <p class="header-sub">Beyond the classroom — competitions, conferences, fellowships, and open-source contributions that shaped how I think as an engineer.</p>
       <div class="exp-count">
-        <div class="exp-count-item"><div class="num">3</div><div class="label">Experiences</div></div>
-        <div class="exp-count-item"><div class="num">2</div><div class="label">IIT Bombay</div></div>
+        <div class="exp-count-item"><div class="num">4</div><div class="label">Experiences</div></div>
+        <div class="exp-count-item"><div class="num">3</div><div class="label">IIT Bombay</div></div>
         <div class="exp-count-item"><div class="num">AIR 5</div><div class="label">eYantra Nationals</div></div>
       </div>
     </div>
   </div>
 
   <div class="exp-section">
+
+    <!-- EYSIP -->
+    <div class="exp-card" id="eysip">
+      <div class="exp-card-header">
+        <div class="exp-icon eysip">🛠️</div>
+        <div class="exp-header-meta">
+          <div class="exp-org">IIT Bombay · e-YSIP 2026</div>
+          <div class="exp-title">eYSIP Summer Internship — Efficient Inference Architectures on FPGA</div>
+          <div class="exp-sub">Two months of building a CNN accelerator on silicon, and picking up a few life lessons on the side</div>
+        </div>
+        <div class="exp-badge-group">
+          <span class="exp-badge badge-green">eYSIP 2026 · IIT Bombay</span>
+          <span class="exp-badge badge-purple">18 May – 11 Jul 2026</span>
+        </div>
+      </div>
+      <div class="exp-card-body">
+        <div class="exp-story">
+          <p>Two months, one FPGA, and a project title long enough to need its own line: <strong>"Efficient Inference Architectures on FPGA."</strong> Selected for the e-Yantra Summer Internship Program (eYSIP) 2026 at IIT Bombay, working alongside <strong>Naveen Kumar B, Sarthak Jain,</strong> and <strong>Joel Siby</strong> on a deceptively simple brief: make CNN inference on an FPGA faster, lighter, and leaner — all at once, please.</p>
+        </div>
+
+        <div class="exp-subhead">The technical bit, kept short and sweet</div>
+        <div class="exp-story">
+          <p>The goal on paper was straightforward and stubborn in practice: <strong>push performance up, pull latency down, and keep resource utilization honest.</strong> We built a fully streaming CNN inference accelerator on the <strong>PYNQ-Z2 (Zynq XC7Z020)</strong> for real-time traffic sign recognition (GTSRB, 10 classes) — trading a full-frame image buffer for a line-buffer-based design that starts computing on pixels the moment they arrive over AXI-Stream, entirely in hardware: Conv1 → MaxPool1 → Conv2 → MaxPool2 → Dense → ArgMax.</p>
+          <p>The software model landed at <strong>~96% test accuracy</strong>; the hardware pipeline replied with a CNN compute latency of just <strong>66 µs</strong>. The real fight was getting pixels <em>into</em> the accelerator — swapping a GPIO-based transfer (~80 ms) for an <strong>AXI DMA streaming path (~1.96 ms)</strong> bought a 40× speedup, and turned data movement into the bottleneck actually worth chasing next.</p>
+        </div>
+
+        <div class="exp-highlights">
+          <div class="exp-highlights-title">Technical highlights</div>
+          <div class="highlights-grid">
+            <div class="highlight-item"><div class="highlight-dot green"></div><div class="highlight-text">Streaming CNN accelerator on <strong>PYNQ-Z2 (XC7Z020)</strong> — full pipeline in hardware, no full-frame buffering</div></div>
+            <div class="highlight-item"><div class="highlight-dot green"></div><div class="highlight-text"><strong>96% test accuracy</strong> on GTSRB with a <strong>66 µs</strong> hardware inference latency</div></div>
+            <div class="highlight-item"><div class="highlight-dot green"></div><div class="highlight-text"><strong>AXI DMA integration</strong> cut data transfer from ~80 ms (GPIO) to ~1.96 ms — a 40× speedup</div></div>
+            <div class="highlight-item"><div class="highlight-dot green"></div><div class="highlight-text">Resource-conscious design — <strong>47.73% DSP</strong>, under 9% LUT/FF/BRAM utilization</div></div>
+          </div>
+        </div>
+
+        <div class="photo-gallery">
+          <div class="photo-item wide">
+            <img src="hardware_setup.jpeg" alt="Live traffic sign recognition dashboard on PYNQ-Z2" />
+            <div class="photo-caption">Live inference dashboard — PYNQ-Z2</div>
+          </div>
+          <div class="photo-item wide">
+            <img src="eysip_poster.png" alt="PYNQ-Z2 hardware setup with webcam" />
+            <div class="photo-caption">Poster Presentation</div>
+          </div>
+        </div>
+
+        <div class="exp-subhead">Everything that happened outside the RTL</div>
+        <div class="exp-story">
+          <p>Beyond the register maps and the AXI handshakes, the eYantra team packed the internship with sessions that had nothing to do with our own project and everything to do with becoming a slightly more well-rounded engineer — talks that pulled us into robotics, AI, hardware, and a few things none of us saw coming.</p>
+          <p><strong>Prof. Shivaram Kalyanakrishnan's</strong> session on <strong>"On Learning"</strong> is the one that's stuck the longest — it nudged the whole room to actually sit with the question of what algorithm is quietly running behind every single tap on your smartphone, and how it eventually turns into the ad you see two scrolls later.</p>
+        </div>
+
+        <div class="exp-story">
+          <p>Somewhere in the first half of the internship came a session with nothing to do with FPGAs at all — a <strong>geopolitics discussion and debate</strong>, exactly the kind I enjoy, since I try to keep up with what's happening around the world anyway. The motion on the table: <em>"AI systems should never be allowed to make life-and-death decisions."</em> I objected — not to the caution behind it, but to the word <strong>"never."</strong></p>
+          <div class="exp-quote">
+            <p>"Both AI and human judgment deserve a seat at that table — but the final call has to stay with a human being. Ruling the machine out entirely felt like the wrong kind of certainty."</p>
+          </div>
+        </div>
+
+        <div class="photo-gallery">
+          <div class="photo-item wide">
+            <img src="geopolitics.JPG" alt="Geopolitics debate session at IIT Bombay" />
+            <div class="photo-caption">Geopolitics with admiral Anil Chopra</div>
+          </div>
+        </div>
+
+        <div class="exp-story">
+          <p>Then came the once-in-a-lifetime part. A visit to the <strong>Naval Dockyard, Mumbai</strong>, and the chance to actually step inside <strong>INS Vagsheer</strong> — a real, active-service submarine of the Indian Navy. Walking through it and seeing how tightly everything is packed and engineered was the kind of stunned-silence moment no lecture could replicate. On <strong>INS Trishul</strong>, a naval officer patiently walked us through how the turbines fire up and how the radar systems track — generous with time and detail for a bunch of interns clearly out of their depth.</p>
+        </div>
+
+        <div class="photo-gallery">
+          <div class="photo-item">
+            <img src="naval_dockyard.jpg" alt="Inside INS Vagsheer submarine at Naval Dockyard Mumbai" />
+            <div class="photo-caption">Naval Dockyard Mumbai </div>
+          </div>
+        </div>
+
+        <div class="exp-story">
+          <p>And then there was just <strong>IIT Bombay</strong> itself — the whole environment of it. Long conversations with fellow interns about their wildly different projects, a walk through <strong>Sameer Hills</strong>, the quiet climb up to the <strong>Elephanta Caves</strong>, a night cycling ride along <strong>Marine Drive</strong>, and getting properly soaked in a real <strong>Mumbai monsoon</strong> at least once. None of it was on the internship syllabus. All of it is the part I'll remember longest.</p>
+        </div>
+
+        <div class="photo-gallery">
+          <div class="photo-item wide">
+            <img src="iitb.jpeg" alt="IIT Bombay campus" />
+            <div class="photo-caption">IIT Bombay — campus life</div>
+          </div>
+        </div>
+
+        <div class="exp-story">
+          <p>If two months at IIT Bombay left me with one sentence to carry forward, it's something <strong>Prof. Shivaram Kalyanakrishnan</strong> said almost in passing, like an aside that turned out to matter more than the main point.</p>
+          <div class="exp-quote green-quote">
+            <p>"You are in charge. No matter how it goes — up or down — you take responsibility for your own."</p>
+          </div>
+        </div>
+
+        <div class="exp-tags-row">
+          <span class="exp-tag">eYSIP 2026</span>
+          <span class="exp-tag">IIT Bombay</span>
+          <span class="exp-tag">PYNQ-Z2</span>
+          <span class="exp-tag">CNN Accelerator</span>
+          <span class="exp-tag">AXI DMA</span>
+          <span class="exp-tag">Streaming Architecture</span>
+          <span class="exp-tag">GTSRB Dataset</span>
+          <span class="exp-tag">Naval Dockyard</span>
+          <span class="exp-tag">ML on FPGA</span>
+          <span class="exp-tag">Teamwork</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-connector"><div class="connector-line"></div></div>
 
     <!-- EYANTRA -->
     <div class="exp-card" id="eyantra">
@@ -273,7 +390,7 @@
         <div class="exp-icon dvcon">🎓</div>
         <div class="exp-header-meta">
           <div class="exp-org">Radisson Blu, Marathahalli · Design & Verification Conference</div>
-          <div class="exp-title">DVCon India 2026 — Fellowship</div>
+          <div class="exp-title">DVCon India 2025 — Fellowship</div>
           <div class="exp-sub">Selected delegate at India's premier ASIC/SoC design & verification conference</div>
         </div>
         <div class="exp-badge-group">
@@ -283,7 +400,7 @@
       </div>
       <div class="exp-card-body">
         <div class="exp-story">
-          <p><strong>Sabarish Mohan JS and Hemanth S</strong> got selected for the Fellowship Opportunity at DVCon India 2026, held at Radisson Blu, Marathahalli on 10–11 September.</p>
+          <p><strong>Sabarish Mohan JS and Hemanth S</strong> got selected for the Fellowship Opportunity at DVCon India 2025, held at Radisson Blu, Marathahalli on 10–11 September.</p>
           <p>DVCon (Design and Verification Conference) is one of the premier conferences in the semiconductor industry, bringing together professionals, researchers, and students to explore cutting-edge advancements in <strong>ASIC/SoC design, verification methodologies, and EDA tool innovations</strong>. It provided a unique platform to learn, network, and exchange ideas with leaders shaping the future of chip design.</p>
         </div>
 
