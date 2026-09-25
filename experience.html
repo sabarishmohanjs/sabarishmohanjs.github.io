@@ -1,305 +1,1876 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
   <title>Experience — Sabarish Mohan JS</title>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Share+Tech+Mono&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"/>
+
   <style>
+
+    /* =========================================================
+       ROOT
+    ========================================================= */
+
     :root {
-      --bg: #0a0a0f;
-      --surface: #111118;
-      --border: #1e1e2e;
-      --accent: #00e5a0;
-      --accent2: #7c6af7;
-      --text: #e8e8f0;
-      --muted: #6b6b80;
+      --bg: #050505;
+      --surface: #0b0b0b;
+      --surface2: #101010;
+
+      --border: rgba(255, 255, 255, 0.09);
+
+      --red: #ff1a1a;
+      --red-dark: #9d0000;
+      --red-light: #ff3b3b;
+
+      --text: #f2f2f2;
+      --muted: #8a8a8a;
+      --dim: #505050;
+
+      --display: "Orbitron", sans-serif;
+      --mono: "Share Tech Mono", monospace;
+      --body: "Inter", sans-serif;
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; overflow-x: hidden; cursor: none; min-height: 100vh; }
 
-    .cursor { width: 12px; height: 12px; background: var(--accent); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; transition: transform 0.15s ease; mix-blend-mode: difference; }
-    .cursor-ring { width: 36px; height: 36px; border: 1px solid var(--accent); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; transition: all 0.25s ease; opacity: 0.5; }
+    /* =========================================================
+       RESET
+    ========================================================= */
 
-    body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 1000; opacity: 0.4; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-    /* NAV */
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 4rem; backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.04); background: rgba(10,10,15,0.7); }
-    .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem; color: var(--accent); letter-spacing: -0.02em; text-decoration: none; }
-    .nav-back { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; transition: color 0.2s; border: 1px solid var(--border); padding: 0.35rem 0.9rem; border-radius: 4px; }
-    .nav-back:hover { color: var(--accent); border-color: rgba(0,229,160,0.3); }
-    .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
-    .nav-links a { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--accent); }
+    html {
+      scroll-behavior: smooth;
+    }
 
-    /* PAGE HEADER */
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--body);
+      overflow-x: hidden;
+      cursor: none;
+      min-height: 100vh;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+
+    /* =========================================================
+       SCANLINES / GRID
+    ========================================================= */
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+
+      background:
+        linear-gradient(
+          rgba(255,255,255,0.018) 50%,
+          transparent 50%
+        );
+
+      background-size: 100% 4px;
+
+      pointer-events: none;
+      z-index: 9990;
+
+      opacity: 0.3;
+    }
+
+    body::after {
+      content: "";
+
+      position: fixed;
+      inset: 0;
+
+      background-image:
+        linear-gradient(
+          rgba(255,26,26,0.025) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255,26,26,0.025) 1px,
+          transparent 1px
+        );
+
+      background-size: 60px 60px;
+
+      pointer-events: none;
+      z-index: -1;
+
+      mask-image: linear-gradient(
+        to bottom,
+        black,
+        transparent 90%
+      );
+    }
+
+
+    /* =========================================================
+       CUSTOM CURSOR
+    ========================================================= */
+
+    .cursor {
+      width: 10px;
+      height: 10px;
+
+      background: var(--red);
+
+      border-radius: 50%;
+
+      position: fixed;
+
+      top: 0;
+      left: 0;
+
+      pointer-events: none;
+
+      z-index: 9999;
+
+      box-shadow:
+        0 0 12px var(--red),
+        0 0 25px rgba(255,26,26,0.35);
+
+      transition: transform 0.15s ease;
+    }
+
+    .cursor-ring {
+      width: 34px;
+      height: 34px;
+
+      border: 1px solid var(--red);
+
+      border-radius: 50%;
+
+      position: fixed;
+
+      top: 0;
+      left: 0;
+
+      pointer-events: none;
+
+      z-index: 9998;
+
+      opacity: 0.45;
+
+      transition:
+        width 0.25s ease,
+        height 0.25s ease,
+        opacity 0.25s ease;
+    }
+
+
+    /* =========================================================
+       NAVIGATION
+    ========================================================= */
+
+    nav {
+      position: fixed;
+
+      top: 0;
+      left: 0;
+      right: 0;
+
+      z-index: 100;
+
+      display: flex;
+
+      justify-content: space-between;
+      align-items: center;
+
+      padding: 1.4rem 5vw;
+
+      background: rgba(5,5,5,0.88);
+
+      backdrop-filter: blur(15px);
+
+      border-bottom:
+        1px solid rgba(255,26,26,0.18);
+    }
+
+    .nav-logo {
+      font-family: var(--display);
+
+      font-weight: 800;
+
+      font-size: 1.05rem;
+
+      color: white;
+
+      letter-spacing: 2px;
+    }
+
+    .nav-logo::after {
+      content: "/";
+      color: var(--red);
+
+      margin-left: 4px;
+    }
+
+    .nav-back {
+      font-family: var(--mono);
+
+      font-size: 0.75rem;
+
+      color: var(--muted);
+
+      letter-spacing: 0.08em;
+
+      text-transform: uppercase;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 0.5rem;
+
+      transition: 0.3s;
+
+      border:
+        1px solid rgba(255,255,255,0.12);
+
+      padding:
+        0.45rem 1rem;
+    }
+
+    .nav-back:hover {
+      color: var(--red);
+
+      border-color: var(--red);
+
+      box-shadow:
+        0 0 20px rgba(255,26,26,0.12);
+    }
+
+
+    /* =========================================================
+       PAGE HEADER
+    ========================================================= */
+
     .page-header {
-      padding: 12rem 4rem 5rem;
+      padding:
+        11rem 7vw
+        6rem;
+
       position: relative;
+
       overflow: hidden;
-      border-bottom: 1px solid var(--border);
+
+      border-bottom:
+        1px solid rgba(255,26,26,0.18);
     }
-    .header-glow { position: absolute; width: 700px; height: 400px; background: radial-gradient(ellipse, rgba(124,106,247,0.07), transparent 70%); top: 0; right: -150px; pointer-events: none; }
-    .header-glow2 { position: absolute; width: 400px; height: 400px; background: radial-gradient(circle, rgba(0,229,160,0.05), transparent 70%); bottom: -50px; left: 5%; pointer-events: none; }
-    .header-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px); background-size: 60px 60px; }
 
-    .header-content { position: relative; max-width: 1200px; margin: 0 auto; }
-    .header-tag { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--accent2); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.75rem; opacity: 0; animation: fadeUp 0.7s 0.1s forwards; }
-    .header-tag::before { content: ''; width: 40px; height: 1px; background: var(--accent2); }
-    .header-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(3rem, 7vw, 6rem); line-height: 0.95; letter-spacing: -0.04em; margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.7s 0.25s forwards; }
-    .header-title .outline { color: transparent; -webkit-text-stroke: 1px var(--accent2); }
-    .header-sub { font-size: 1rem; color: var(--muted); max-width: 550px; line-height: 1.75; font-weight: 300; opacity: 0; animation: fadeUp 0.7s 0.4s forwards; }
+    .header-grid {
+      position: absolute;
 
-    .exp-count { display: flex; gap: 3rem; margin-top: 3rem; opacity: 0; animation: fadeUp 0.7s 0.55s forwards; }
-    .exp-count-item .num { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--accent); }
-    .exp-count-item .label { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.2rem; }
+      inset: 0;
 
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+      background-image:
+        linear-gradient(
+          rgba(255,26,26,0.025) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255,26,26,0.025) 1px,
+          transparent 1px
+        );
 
-    /* EXPERIENCE CARDS */
-    .exp-section { max-width: 1200px; margin: 0 auto; padding: 6rem 4rem; }
+      background-size: 60px 60px;
+    }
+
+    .header-glow {
+      position: absolute;
+
+      width: 700px;
+      height: 500px;
+
+      background:
+        radial-gradient(
+          ellipse,
+          rgba(255,26,26,0.09),
+          transparent 70%
+        );
+
+      top: -150px;
+      right: -200px;
+
+      pointer-events: none;
+    }
+
+    .header-glow2 {
+      position: absolute;
+
+      width: 400px;
+      height: 400px;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(255,26,26,0.045),
+          transparent 70%
+        );
+
+      bottom: -150px;
+      left: 5%;
+
+      pointer-events: none;
+    }
+
+    .header-content {
+      position: relative;
+
+      max-width: 1250px;
+
+      margin: 0 auto;
+    }
+
+    .header-tag {
+      font-family: var(--mono);
+
+      font-size: 0.72rem;
+
+      color: var(--red);
+
+      letter-spacing: 0.2em;
+
+      text-transform: uppercase;
+
+      margin-bottom: 1.5rem;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 0.75rem;
+
+      opacity: 0;
+
+      animation:
+        fadeUp 0.7s 0.1s forwards;
+    }
+
+    .header-tag::before {
+      content: "";
+
+      width: 42px;
+      height: 1px;
+
+      background: var(--red);
+    }
+
+    .header-title {
+      font-family: var(--display);
+
+      font-weight: 800;
+
+      font-size:
+        clamp(3rem, 7vw, 6.5rem);
+
+      line-height: 0.95;
+
+      letter-spacing: -0.04em;
+
+      margin-bottom: 1.8rem;
+
+      opacity: 0;
+
+      animation:
+        fadeUp 0.7s 0.25s forwards;
+    }
+
+    .header-title .outline {
+      color: transparent;
+
+      -webkit-text-stroke:
+        1px rgba(255,255,255,0.7);
+    }
+
+    .header-sub {
+      font-size: 1rem;
+
+      color: var(--muted);
+
+      max-width: 600px;
+
+      line-height: 1.8;
+
+      font-weight: 300;
+
+      opacity: 0;
+
+      animation:
+        fadeUp 0.7s 0.4s forwards;
+    }
+
+    .exp-count {
+      display: flex;
+
+      gap: 3.5rem;
+
+      margin-top: 3rem;
+
+      opacity: 0;
+
+      animation:
+        fadeUp 0.7s 0.55s forwards;
+    }
+
+    .exp-count-item .num {
+      font-family: var(--display);
+
+      font-size: 2rem;
+
+      font-weight: 800;
+
+      color: var(--red);
+    }
+
+    .exp-count-item .label {
+      font-family: var(--mono);
+
+      font-size: 0.65rem;
+
+      color: var(--muted);
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.1em;
+
+      margin-top: 0.3rem;
+    }
+
+
+    /* =========================================================
+       HEADER GLITCH
+    ========================================================= */
+
+    .header-title {
+      position: relative;
+    }
+
+    .header-title:hover {
+      text-shadow:
+        2px 0 var(--red),
+        -2px 0 rgba(255,255,255,0.4);
+    }
+
+
+    /* =========================================================
+       EXPERIENCE SECTION
+    ========================================================= */
+
+    .exp-section {
+      max-width: 1400px;
+
+      margin: 0 auto;
+
+      padding:
+        6rem 5vw;
+    }
+
+
+    /* =========================================================
+       EXPERIENCE CARD
+    ========================================================= */
 
     .exp-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
+      position: relative;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,255,255,0.025),
+          rgba(255,255,255,0.005)
+        );
+
+      border:
+        1px solid rgba(255,255,255,0.09);
+
       margin-bottom: 2.5rem;
+
       overflow: hidden;
-      transition: border-color 0.4s, transform 0.4s;
+
       opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.7s ease, transform 0.7s ease, border-color 0.3s;
+
+      transform:
+        translateY(40px);
+
+      transition:
+        opacity 0.7s ease,
+        transform 0.7s ease,
+        border-color 0.3s;
     }
-    .exp-card.visible { opacity: 1; transform: translateY(0); }
-    .exp-card:hover { border-color: rgba(124,106,247,0.3); }
+
+    .exp-card::before {
+      content: "";
+
+      position: absolute;
+
+      left: 0;
+      top: 0;
+
+      width: 3px;
+      height: 100%;
+
+      background: var(--red);
+
+      transform:
+        scaleY(0);
+
+      transform-origin: top;
+
+      transition:
+        transform 0.5s ease;
+
+      z-index: 3;
+    }
+
+    .exp-card:hover {
+      border-color:
+        rgba(255,26,26,0.4);
+    }
+
+    .exp-card:hover::before {
+      transform:
+        scaleY(1);
+    }
+
+    .exp-card.visible {
+      opacity: 1;
+
+      transform:
+        translateY(0);
+    }
+
+
+    /* =========================================================
+       CARD HEADER
+    ========================================================= */
 
     .exp-card-header {
-      padding: 2.5rem 3rem 2rem;
+      padding:
+        2.5rem 3rem 2rem;
+
       display: grid;
-      grid-template-columns: auto 1fr auto;
+
+      grid-template-columns:
+        auto 1fr auto;
+
       gap: 2rem;
+
       align-items: start;
-      border-bottom: 1px solid var(--border);
+
+      border-bottom:
+        1px solid rgba(255,26,26,0.16);
+
       position: relative;
     }
 
     .exp-icon {
-      width: 56px; height: 56px;
-      border-radius: 12px;
+      width: 56px;
+      height: 56px;
+
       display: flex;
+
       align-items: center;
       justify-content: center;
-      font-size: 1.5rem;
+
+      font-size: 1.35rem;
+
       flex-shrink: 0;
+
+      border-radius: 0;
+
+      color: var(--red);
+
+      background:
+        rgba(255,26,26,0.05);
+
+      border:
+        1px solid rgba(255,26,26,0.25);
+
       position: relative;
     }
-    .exp-icon.eysip { background: rgba(0,229,160,0.08); border: 1px solid rgba(0,229,160,0.2); }
-    .exp-icon.eyantra { background: rgba(0,229,160,0.08); border: 1px solid rgba(0,229,160,0.2); }
-    .exp-icon.dvcon { background: rgba(124,106,247,0.08); border: 1px solid rgba(124,106,247,0.2); }
-    .exp-icon.fossee { background: rgba(239,163,39,0.08); border: 1px solid rgba(239,163,39,0.2); }
 
-    .exp-header-meta { flex: 1; }
-    .exp-org { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.5rem; }
-    .exp-title { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.5rem; line-height: 1.2; }
-    .exp-sub { font-size: 0.9rem; color: var(--muted); font-weight: 300; }
+    .exp-icon::after {
+      content: "";
 
-    .exp-badge-group { display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem; flex-shrink: 0; }
-    .exp-badge { font-family: 'DM Mono', monospace; font-size: 0.65rem; padding: 0.3rem 0.85rem; border-radius: 3px; letter-spacing: 0.06em; white-space: nowrap; }
-    .badge-green { background: rgba(0,229,160,0.08); border: 1px solid rgba(0,229,160,0.25); color: var(--accent); }
-    .badge-purple { background: rgba(124,106,247,0.08); border: 1px solid rgba(124,106,247,0.25); color: var(--accent2); }
-    .badge-amber { background: rgba(239,163,39,0.08); border: 1px solid rgba(239,163,39,0.25); color: #efa327; }
+      position: absolute;
 
-    .exp-card-body { padding: 2.5rem 3rem; }
+      right: -1px;
+      bottom: -1px;
 
-    .exp-story { margin-bottom: 2rem; }
-    .exp-story p { font-size: 0.97rem; color: var(--muted); line-height: 1.85; margin-bottom: 1.1rem; font-weight: 300; }
-    .exp-story p strong { color: var(--text); font-weight: 500; }
-    .exp-story p:last-child { margin-bottom: 0; }
+      width: 10px;
+      height: 10px;
 
-    .exp-subhead { font-family: 'Syne', sans-serif; font-size: 1.02rem; font-weight: 700; color: var(--text); margin: 2rem 0 1rem; letter-spacing: -0.01em; display: flex; align-items: center; gap: 0.6rem; }
-    .exp-subhead::before { content: ''; width: 3px; height: 1.1rem; background: var(--accent2); border-radius: 2px; }
+      border-right:
+        2px solid var(--red);
 
-    .exp-highlights { margin-bottom: 2rem; }
-    .exp-highlights-title { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.6rem; }
-    .exp-highlights-title::after { content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--accent); opacity: 0.4; }
+      border-bottom:
+        2px solid var(--red);
+    }
 
-    .highlights-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.75rem; }
-    .highlight-item { display: flex; align-items: flex-start; gap: 0.75rem; padding: 1rem 1.2rem; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 8px; transition: border-color 0.2s, background 0.2s; }
-    .highlight-item:hover { border-color: rgba(124,106,247,0.25); background: rgba(124,106,247,0.03); }
-    .highlight-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent2); flex-shrink: 0; margin-top: 0.5rem; }
-    .highlight-dot.green { background: var(--accent); }
-    .highlight-dot.amber { background: #efa327; }
-    .highlight-text { font-size: 0.85rem; color: var(--muted); line-height: 1.6; font-weight: 300; }
-    .highlight-text strong { color: var(--text); font-weight: 500; }
+    .exp-header-meta {
+      flex: 1;
+    }
 
-    .exp-tags-row { display: flex; flex-wrap: wrap; gap: 0.45rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
-    .exp-tag { font-family: 'DM Mono', monospace; font-size: 0.65rem; padding: 0.3rem 0.8rem; border-radius: 3px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--muted); transition: all 0.2s; }
-    .exp-tag:hover { color: var(--accent); border-color: rgba(0,229,160,0.3); background: rgba(0,229,160,0.05); }
+    .exp-org {
+      font-family: var(--mono);
 
-    /* Quote block */
-    .exp-quote { margin: 1.5rem 0; padding: 1.2rem 1.5rem; border-left: 2px solid var(--accent2); background: rgba(124,106,247,0.04); border-radius: 0 8px 8px 0; }
-    .exp-quote p { font-size: 0.93rem; color: var(--text); line-height: 1.75; font-style: italic; font-weight: 300; }
-    .exp-quote.green-quote { border-left-color: var(--accent); background: rgba(0,229,160,0.04); }
+      font-size: 0.68rem;
 
-    /* Photo gallery */
-    .photo-gallery { display: flex; gap: 0.75rem; margin-bottom: 2rem; flex-wrap: wrap; }
-    .photo-item { position: relative; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: var(--bg); width: 140px; height: 140px; flex-shrink: 0; }
-    .photo-item.wide { width: 220px; height: 140px; }
-    .photo-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; filter: brightness(0.92); }
-    .photo-item:hover img { transform: scale(1.06); filter: brightness(1); }
-    .photo-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 0.4rem 0.6rem; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); font-family: 'DM Mono', monospace; font-size: 0.58rem; color: rgba(255,255,255,0.85); letter-spacing: 0.04em; }
+      color: var(--red);
 
-    /* Connector line between cards */
-    .exp-connector { display: flex; align-items: center; justify-content: center; height: 2.5rem; gap: 0; }
-    .connector-line { width: 1px; height: 100%; background: linear-gradient(to bottom, var(--border), rgba(124,106,247,0.4), var(--border)); }
+      text-transform: uppercase;
 
-    footer { border-top: 1px solid var(--border); padding: 2rem 4rem; display: flex; justify-content: space-between; align-items: center; }
-    footer p { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--muted); letter-spacing: 0.05em; }
-    .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.9rem; color: var(--accent); }
+      letter-spacing: 0.15em;
+
+      margin-bottom: 0.65rem;
+    }
+
+    .exp-title {
+      font-family: var(--display);
+
+      font-size: 1.45rem;
+
+      font-weight: 700;
+
+      letter-spacing: -0.02em;
+
+      margin-bottom: 0.55rem;
+
+      line-height: 1.3;
+
+      text-transform: uppercase;
+    }
+
+    .exp-sub {
+      font-size: 0.9rem;
+
+      color: var(--muted);
+
+      font-weight: 300;
+
+      line-height: 1.6;
+    }
+
+    .exp-badge-group {
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: flex-end;
+
+      gap: 0.5rem;
+
+      flex-shrink: 0;
+    }
+
+    .exp-badge {
+      font-family: var(--mono);
+
+      font-size: 0.65rem;
+
+      padding:
+        0.35rem 0.85rem;
+
+      letter-spacing: 0.06em;
+
+      white-space: nowrap;
+
+      border-radius: 0;
+
+      color: var(--red);
+
+      background:
+        rgba(255,26,26,0.05);
+
+      border:
+        1px solid rgba(255,26,26,0.3);
+    }
+
+    .badge-green,
+    .badge-purple,
+    .badge-amber {
+      color: var(--red);
+
+      background:
+        rgba(255,26,26,0.05);
+
+      border-color:
+        rgba(255,26,26,0.3);
+    }
+
+
+    /* =========================================================
+       CARD BODY
+       IMPORTANT:
+       CONTENT STAYS THE SAME.
+       PHOTOS ARE MOVED TO THE SIDE.
+    ========================================================= */
+
+    .exp-card-body {
+      padding:
+        2.5rem 3rem;
+
+      display: grid;
+
+      grid-template-columns:
+        minmax(0, 1.55fr)
+        minmax(260px, 0.8fr);
+
+      column-gap: 3rem;
+
+      align-items: start;
+    }
+
+
+    /* =========================================================
+       CONTENT SIDE
+    ========================================================= */
+
+    .exp-story {
+      margin-bottom: 2rem;
+
+      grid-column: 1;
+    }
+
+    .exp-story p {
+      font-size: 0.97rem;
+
+      color: var(--muted);
+
+      line-height: 1.85;
+
+      margin-bottom: 1.1rem;
+
+      font-weight: 300;
+    }
+
+    .exp-story p strong {
+      color: var(--text);
+
+      font-weight: 500;
+    }
+
+    .exp-story p:last-child {
+      margin-bottom: 0;
+    }
+
+    .exp-subhead {
+      font-family: var(--display);
+
+      font-size: 0.95rem;
+
+      font-weight: 700;
+
+      color: var(--text);
+
+      margin:
+        1.8rem 0 1rem;
+
+      letter-spacing: -0.01em;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 0.6rem;
+
+      grid-column: 1;
+    }
+
+    .exp-subhead::before {
+      content: "";
+
+      width: 3px;
+      height: 1rem;
+
+      background: var(--red);
+    }
+
+
+    /* =========================================================
+       HIGHLIGHTS
+    ========================================================= */
+
+    .exp-highlights {
+      margin-bottom: 2rem;
+
+      grid-column: 1;
+    }
+
+    .exp-highlights-title {
+      font-family: var(--mono);
+
+      font-size: 0.68rem;
+
+      color: var(--red);
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.15em;
+
+      margin-bottom: 1rem;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 0.6rem;
+    }
+
+    .exp-highlights-title::after {
+      content: "";
+
+      width: 60px;
+      height: 1px;
+
+      background: var(--red);
+
+      opacity: 0.5;
+    }
+
+    .highlights-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+      gap: 0.75rem;
+    }
+
+    .highlight-item {
+      display: flex;
+
+      align-items: flex-start;
+
+      gap: 0.75rem;
+
+      padding:
+        1rem 1.2rem;
+
+      background:
+        rgba(255,255,255,0.02);
+
+      border:
+        1px solid rgba(255,255,255,0.08);
+
+      border-radius: 0;
+
+      transition:
+        border-color 0.2s,
+        background 0.2s;
+    }
+
+    .highlight-item:hover {
+      border-color:
+        rgba(255,26,26,0.3);
+
+      background:
+        rgba(255,26,26,0.025);
+    }
+
+    .highlight-dot {
+      width: 6px;
+      height: 6px;
+
+      border-radius: 50%;
+
+      background: var(--red);
+
+      flex-shrink: 0;
+
+      margin-top: 0.5rem;
+
+      box-shadow:
+        0 0 8px rgba(255,26,26,0.5);
+    }
+
+    .highlight-dot.green,
+    .highlight-dot.amber {
+      background: var(--red);
+    }
+
+    .highlight-text {
+      font-size: 0.85rem;
+
+      color: var(--muted);
+
+      line-height: 1.6;
+
+      font-weight: 300;
+    }
+
+    .highlight-text strong {
+      color: var(--text);
+
+      font-weight: 500;
+    }
+
+
+    /* =========================================================
+       QUOTES
+    ========================================================= */
+
+    .exp-quote {
+      margin:
+        1.5rem 0;
+
+      padding:
+        1.2rem 1.5rem;
+
+      border-left:
+        2px solid var(--red);
+
+      background:
+        rgba(255,26,26,0.035);
+
+      border-radius: 0;
+
+      grid-column: 1;
+    }
+
+    .exp-quote p {
+      font-size: 0.93rem;
+
+      color: var(--text);
+
+      line-height: 1.75;
+
+      font-style: italic;
+
+      font-weight: 300;
+    }
+
+    .exp-quote.green-quote {
+      border-left-color:
+        var(--red);
+
+      background:
+        rgba(255,26,26,0.035);
+    }
+
+
+    /* =========================================================
+       PHOTO GALLERY
+       PHOTOS NOW LIVE IN RIGHT COLUMN
+    ========================================================= */
+
+    .photo-gallery {
+      grid-column: 2;
+
+      grid-row: auto;
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+      gap: 0.75rem;
+
+      margin: 0;
+
+      align-self: start;
+
+      position: sticky;
+
+      top: 105px;
+    }
+
+    .photo-item {
+      position: relative;
+
+      border-radius: 0;
+
+      overflow: hidden;
+
+      border:
+        1px solid rgba(255,26,26,0.2);
+
+      background: #050505;
+
+      width: 100%;
+      height: 155px;
+
+      flex-shrink: 0;
+    }
+
+    .photo-item.wide {
+      width: 100%;
+
+      height: 190px;
+
+      grid-column:
+        span 2;
+    }
+
+    .photo-item img {
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+
+      display: block;
+
+      transition:
+        transform 0.5s ease,
+        filter 0.4s ease;
+
+      filter:
+        grayscale(100%)
+        brightness(0.8)
+        contrast(1.05);
+    }
+
+    .photo-item:hover img {
+      transform:
+        scale(1.06);
+
+      filter:
+        grayscale(0%)
+        brightness(1)
+        contrast(1.05);
+    }
+
+    .photo-item::before {
+      content: "";
+
+      position: absolute;
+
+      inset: 7px;
+
+      border:
+        1px solid rgba(255,26,26,0.25);
+
+      z-index: 2;
+
+      pointer-events: none;
+    }
+
+    .photo-item::after {
+      content: "";
+
+      position: absolute;
+
+      right: 0;
+      bottom: 0;
+
+      width: 15px;
+      height: 15px;
+
+      border-right:
+        2px solid var(--red);
+
+      border-bottom:
+        2px solid var(--red);
+
+      z-index: 3;
+
+      pointer-events: none;
+    }
+
+    .photo-caption {
+      position: absolute;
+
+      bottom: 0;
+      left: 0;
+      right: 0;
+
+      padding:
+        0.55rem 0.7rem;
+
+      background:
+        linear-gradient(
+          to top,
+          rgba(0,0,0,0.95),
+          transparent
+        );
+
+      font-family: var(--mono);
+
+      font-size: 0.58rem;
+
+      color:
+        rgba(255,255,255,0.9);
+
+      letter-spacing: 0.04em;
+
+      z-index: 4;
+    }
+
+
+    /* =========================================================
+       TAGS
+    ========================================================= */
+
+    .exp-tags-row {
+      display: flex;
+
+      flex-wrap: wrap;
+
+      gap: 0.45rem;
+
+      padding-top: 1.5rem;
+
+      border-top:
+        1px solid rgba(255,255,255,0.08);
+
+      grid-column:
+        1 / -1;
+    }
+
+    .exp-tag {
+      font-family: var(--mono);
+
+      font-size: 0.65rem;
+
+      padding:
+        0.3rem 0.8rem;
+
+      border-radius: 0;
+
+      background:
+        rgba(255,255,255,0.025);
+
+      border:
+        1px solid rgba(255,255,255,0.1);
+
+      color: var(--muted);
+
+      transition:
+        all 0.2s;
+    }
+
+    .exp-tag:hover {
+      color: var(--red);
+
+      border-color:
+        rgba(255,26,26,0.4);
+
+      background:
+        rgba(255,26,26,0.05);
+    }
+
+
+    /* =========================================================
+       CONNECTOR
+    ========================================================= */
+
+    .exp-connector {
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      height: 2.5rem;
+    }
+
+    .connector-line {
+      width: 1px;
+
+      height: 100%;
+
+      background:
+        linear-gradient(
+          to bottom,
+          transparent,
+          var(--red),
+          transparent
+        );
+
+      opacity: 0.5;
+    }
+
+
+    /* =========================================================
+       FOOTER
+    ========================================================= */
+
+    footer {
+      border-top:
+        1px solid rgba(255,26,26,0.15);
+
+      padding:
+        2rem 5vw;
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+    }
+
+    footer p {
+      font-family: var(--mono);
+
+      font-size: 0.7rem;
+
+      color: var(--muted);
+
+      letter-spacing: 0.05em;
+    }
+
+    .footer-logo {
+      font-family: var(--display);
+
+      font-weight: 800;
+
+      font-size: 0.9rem;
+
+      color: var(--red);
+    }
+
+
+    /* =========================================================
+       ANIMATION
+    ========================================================= */
+
+    @keyframes fadeUp {
+
+      from {
+        opacity: 0;
+        transform:
+          translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform:
+          translateY(0);
+      }
+
+    }
+
+
+    /* =========================================================
+       RESPONSIVE
+    ========================================================= */
+
+    @media (max-width: 950px) {
+
+      .exp-card-body {
+        grid-template-columns: 1fr;
+      }
+
+      .photo-gallery {
+        grid-column: 1;
+
+        position: relative;
+
+        top: auto;
+
+        order: -1;
+
+        margin-bottom: 2rem;
+      }
+
+      .exp-story,
+      .exp-subhead,
+      .exp-highlights,
+      .exp-quote {
+        grid-column: 1;
+      }
+
+      .exp-tags-row {
+        grid-column: 1;
+      }
+
+    }
+
 
     @media (max-width: 768px) {
-      nav { padding: 1.2rem 1.5rem; }
-      .page-header { padding: 8rem 1.5rem 4rem; }
-      .exp-section { padding: 4rem 1.5rem; }
-      .exp-card-header { grid-template-columns: auto 1fr; gap: 1rem; }
-      .exp-badge-group { flex-direction: row; align-items: flex-start; grid-column: 1 / -1; }
-      .exp-card-body { padding: 1.5rem; }
-      .exp-card-header { padding: 1.5rem 1.5rem 1.25rem; }
-      .exp-count { gap: 2rem; }
-      footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.5rem; }
-      .highlights-grid { grid-template-columns: 1fr; }
+
+      body {
+        cursor: auto;
+      }
+
+      .cursor,
+      .cursor-ring {
+        display: none;
+      }
+
+      nav {
+        padding:
+          1.2rem 1.5rem;
+      }
+
+      .page-header {
+        padding:
+          8rem 1.5rem 4rem;
+      }
+
+      .exp-section {
+        padding:
+          4rem 1.5rem;
+      }
+
+      .exp-card-header {
+        grid-template-columns:
+          auto 1fr;
+
+        gap: 1rem;
+      }
+
+      .exp-badge-group {
+        flex-direction: row;
+
+        align-items: flex-start;
+
+        grid-column:
+          1 / -1;
+
+        flex-wrap: wrap;
+      }
+
+      .exp-card-body {
+        padding:
+          1.5rem;
+      }
+
+      .exp-card-header {
+        padding:
+          1.5rem 1.5rem 1.25rem;
+      }
+
+      .highlights-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .exp-count {
+        gap: 2rem;
+      }
+
+      footer {
+        flex-direction: column;
+
+        gap: 1rem;
+
+        text-align: center;
+
+        padding:
+          2rem 1.5rem;
+      }
+
     }
+
+
+    @media (max-width: 520px) {
+
+      .header-title {
+        font-size:
+          2.9rem;
+      }
+
+      .exp-count {
+        display: grid;
+
+        grid-template-columns:
+          repeat(2, 1fr);
+
+        gap: 1.5rem;
+      }
+
+      .photo-gallery {
+        grid-template-columns:
+          1fr 1fr;
+      }
+
+      .photo-item,
+      .photo-item.wide {
+        height: 150px;
+      }
+
+      .photo-item.wide {
+        grid-column:
+          span 2;
+      }
+
+      .exp-title {
+        font-size:
+          1.15rem;
+      }
+
+    }
+
   </style>
 </head>
+
+
 <body>
+
+
+  <!-- =========================================================
+       CURSOR
+  ========================================================= -->
 
   <div class="cursor" id="cursor"></div>
   <div class="cursor-ring" id="cursorRing"></div>
 
+
+  <!-- =========================================================
+       NAVIGATION
+  ========================================================= -->
+
   <nav>
-    <a href="portfolio.html" class="nav-logo">SM</a>
-    <a href="portfolio.html" class="nav-back">← Portfolio</a>
+
+    <a href="portfolio.html" class="nav-logo">
+      SM
+    </a>
+
+    <a href="portfolio.html" class="nav-back">
+      ← Portfolio
+    </a>
+
   </nav>
 
+
+  <!-- =========================================================
+       PAGE HEADER
+  ========================================================= -->
+
   <div class="page-header">
+
     <div class="header-grid"></div>
+
     <div class="header-glow"></div>
+
     <div class="header-glow2"></div>
+
     <div class="header-content">
-      <p class="header-tag">Real-world exposure</p>
+
+      <p class="header-tag">
+        Real-world exposure
+      </p>
+
       <h1 class="header-title">
+
         Experience &<br>
-        <span class="outline">Achievements</span>
+
+        <span class="outline">
+          Achievements
+        </span>
+
       </h1>
-      <p class="header-sub">Beyond the classroom — competitions, conferences, fellowships, and open-source contributions that shaped how I think as an engineer.</p>
+
+      <p class="header-sub">
+        Beyond the classroom — competitions, conferences, fellowships, and open-source contributions that shaped how I think as an engineer.
+      </p>
+
       <div class="exp-count">
-        <div class="exp-count-item"><div class="num">4</div><div class="label">Experiences</div></div>
-        <div class="exp-count-item"><div class="num">3</div><div class="label">IIT Bombay</div></div>
-        <div class="exp-count-item"><div class="num">AIR 5</div><div class="label">eYantra Nationals</div></div>
+
+        <div class="exp-count-item">
+
+          <div class="num">
+            4
+          </div>
+
+          <div class="label">
+            Experiences
+          </div>
+
+        </div>
+
+
+        <div class="exp-count-item">
+
+          <div class="num">
+            3
+          </div>
+
+          <div class="label">
+            IIT Bombay
+          </div>
+
+        </div>
+
+
+        <div class="exp-count-item">
+
+          <div class="num">
+            AIR 5
+          </div>
+
+          <div class="label">
+            eYantra Nationals
+          </div>
+
+        </div>
+
       </div>
+
     </div>
+
   </div>
+
+
+  <!-- =========================================================
+       EXPERIENCE
+  ========================================================= -->
 
   <div class="exp-section">
 
-    <!-- EYSIP -->
+
+    <!-- =======================================================
+         EYSIP
+    ======================================================== -->
+
     <div class="exp-card" id="eysip">
+
       <div class="exp-card-header">
-        <div class="exp-icon eysip">🛠️</div>
-        <div class="exp-header-meta">
-          <div class="exp-org">IIT Bombay · e-YSIP 2026</div>
-          <div class="exp-title">eYSIP Summer Internship — Efficient Inference Architectures on FPGA</div>
-          <div class="exp-sub">Two months of building a CNN accelerator on silicon, and picking up a few life lessons on the side</div>
-        </div>
-        <div class="exp-badge-group">
-          <span class="exp-badge badge-green">eYSIP 2026 · IIT Bombay</span>
-          <span class="exp-badge badge-purple">18 May – 11 Jul 2026</span>
-        </div>
-      </div>
-      <div class="exp-card-body">
-        <div class="exp-story">
-          <p>Two months, one FPGA, and a project title long enough to need its own line: <strong>"Efficient Inference Architectures on FPGA."</strong> Selected for the e-Yantra Summer Internship Program (eYSIP) 2026 at IIT Bombay, working alongside <strong>Naveen Kumar B, Sarthak Jain,</strong> and <strong>Joel Siby</strong> on a deceptively simple brief: make CNN inference on an FPGA faster, lighter, and leaner — all at once, please.</p>
+
+        <div class="exp-icon eysip">
+          🛠️
         </div>
 
-        <div class="exp-subhead">The technical bit, kept short and sweet</div>
-        <div class="exp-story">
-          <p>The goal on paper was straightforward and stubborn in practice: <strong>push performance up, pull latency down, and keep resource utilization honest.</strong> We built a fully streaming CNN inference accelerator on the <strong>PYNQ-Z2 (Zynq XC7Z020)</strong> for real-time traffic sign recognition (GTSRB, 10 classes) — trading a full-frame image buffer for a line-buffer-based design that starts computing on pixels the moment they arrive over AXI-Stream, entirely in hardware: Conv1 → MaxPool1 → Conv2 → MaxPool2 → Dense → ArgMax.</p>
-          <p>The software model landed at <strong>~96% test accuracy</strong>; the hardware pipeline replied with a CNN compute latency of just <strong>66 µs</strong>. The real fight was getting pixels <em>into</em> the accelerator — swapping a GPIO-based transfer (~80 ms) for an <strong>AXI DMA streaming path (~1.96 ms)</strong> bought a 40× speedup, and turned data movement into the bottleneck actually worth chasing next.</p>
+        <div class="exp-header-meta">
+
+          <div class="exp-org">
+            IIT Bombay · e-YSIP 2026
+          </div>
+
+          <div class="exp-title">
+            eYSIP Summer Internship — Efficient Inference Architectures on FPGA
+          </div>
+
+          <div class="exp-sub">
+            Two months of building a CNN accelerator on silicon, and picking up a few life lessons on the side
+          </div>
+
         </div>
+
+        <div class="exp-badge-group">
+
+          <span class="exp-badge badge-green">
+            eYSIP 2026 · IIT Bombay
+          </span>
+
+          <span class="exp-badge badge-purple">
+            18 May – 11 Jul 2026
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="exp-card-body">
+
+
+        <div class="exp-story">
+
+          <p>
+            Two months, one FPGA, and a project title long enough to need its own line:
+            <strong>"Efficient Inference Architectures on FPGA."</strong>
+            Selected for the e-Yantra Summer Internship Program (eYSIP) 2026 at IIT Bombay, working alongside
+            <strong>Naveen Kumar B, Sarthak Jain,</strong> and
+            <strong>Joel Siby</strong>
+            on a deceptively simple brief: make CNN inference on an FPGA faster, lighter, and leaner — all at once, please.
+          </p>
+
+        </div>
+
+
+        <div class="exp-subhead">
+          The technical bit, kept short and sweet
+        </div>
+
+
+        <div class="exp-story">
+
+          <p>
+            The goal on paper was straightforward and stubborn in practice:
+            <strong>push performance up, pull latency down, and keep resource utilization honest.</strong>
+            We built a fully streaming CNN inference accelerator on the
+            <strong>PYNQ-Z2 (Zynq XC7Z020)</strong>
+            for real-time traffic sign recognition (GTSRB, 10 classes) — trading a full-frame image buffer for a line-buffer-based design that starts computing on pixels the moment they arrive over AXI-Stream, entirely in hardware:
+            Conv1 → MaxPool1 → Conv2 → MaxPool2 → Dense → ArgMax.
+          </p>
+
+          <p>
+            The software model landed at <strong>~96% test accuracy</strong>;
+            the hardware pipeline replied with a CNN compute latency of just
+            <strong>66 µs</strong>.
+            The real fight was getting pixels <em>into</em> the accelerator — swapping a GPIO-based transfer (~80 ms) for an
+            <strong>AXI DMA streaming path (~1.96 ms)</strong>
+            bought a 40× speedup, and turned data movement into the bottleneck actually worth chasing next.
+          </p>
+
+        </div>
+
 
         <div class="exp-highlights">
-          <div class="exp-highlights-title">Technical highlights</div>
+
+          <div class="exp-highlights-title">
+            Technical highlights
+          </div>
+
           <div class="highlights-grid">
-            <div class="highlight-item"><div class="highlight-dot green"></div><div class="highlight-text">Streaming CNN accelerator on <strong>PYNQ-Z2 (XC7Z020)</strong> — full pipeline in hardware, no full-frame buffering</div></div>
-            <div class="highlight-item"><div class="highlight-dot green"></div><div class="highlight-text"><strong>96% test accuracy</strong> on GTSRB with a <strong>66 µs</strong> hardware inference latency</div></div>
-            <div class="highlight-item"><div class="highlight-dot green"></div><div class="highlight-text"><strong>AXI DMA integration</strong> cut data transfer from ~80 ms (GPIO) to ~1.96 ms — a 40× speedup</div></div>
-            <div class="highlight-item"><div class="highlight-dot green"></div><div class="highlight-text">Resource-conscious design — <strong>47.73% DSP</strong>, under 9% LUT/FF/BRAM utilization</div></div>
+
+            <div class="highlight-item">
+
+              <div class="highlight-dot green"></div>
+
+              <div class="highlight-text">
+                Streaming CNN accelerator on
+                <strong>PYNQ-Z2 (XC7Z020)</strong>
+                — full pipeline in hardware, no full-frame buffering
+              </div>
+
+            </div>
+
+
+            <div class="highlight-item">
+
+              <div class="highlight-dot green"></div>
+
+              <div class="highlight-text">
+                <strong>96% test accuracy</strong>
+                on GTSRB with a
+                <strong>66 µs</strong>
+                hardware inference latency
+              </div>
+
+            </div>
+
+
+            <div class="highlight-item">
+
+              <div class="highlight-dot green"></div>
+
+              <div class="highlight-text">
+                <strong>AXI DMA integration</strong>
+                cut data transfer from ~80 ms (GPIO) to ~1.96 ms — a 40× speedup
+              </div>
+
+            </div>
+
+
+            <div class="highlight-item">
+
+              <div class="highlight-dot green"></div>
+
+              <div class="highlight-text">
+                Resource-conscious design —
+                <strong>47.73% DSP</strong>,
+                under 9% LUT/FF/BRAM utilization
+              </div>
+
+            </div>
+
           </div>
+
         </div>
+
+
+        <!-- PHOTO SIDE -->
 
         <div class="photo-gallery">
+
           <div class="photo-item wide">
-            <img src="hardware_setup.jpeg" alt="Live traffic sign recognition dashboard on PYNQ-Z2" />
-            <div class="photo-caption">Live inference dashboard — PYNQ-Z2</div>
+
+            <img
+              src="hardware_setup.jpeg"
+              alt="Live traffic sign recognition dashboard on PYNQ-Z2"
+            />
+
+            <div class="photo-caption">
+              Live inference dashboard — PYNQ-Z2
+            </div>
+
           </div>
+
+
           <div class="photo-item wide">
-            <img src="eysip_poster.png" alt="PYNQ-Z2 hardware setup with webcam" />
-            <div class="photo-caption">Poster Presentation</div>
+
+            <img
+              src="eysip_poster.png"
+              alt="PYNQ-Z2 hardware setup with webcam"
+            />
+
+            <div class="photo-caption">
+              Poster Presentation
+            </div>
+
           </div>
+
         </div>
 
-        <div class="exp-subhead">Everything that happened outside the RTL</div>
-        <div class="exp-story">
-          <p>Beyond the register maps and the AXI handshakes, the eYantra team packed the internship with sessions that had nothing to do with our own project and everything to do with becoming a slightly more well-rounded engineer — talks that pulled us into robotics, AI, hardware, and a few things none of us saw coming.</p>
-          <p><strong>Prof. Shivaram Kalyanakrishnan's</strong> session on <strong>"On Learning"</strong> is the one that's stuck the longest — it nudged the whole room to actually sit with the question of what algorithm is quietly running behind every single tap on your smartphone, and how it eventually turns into the ad you see two scrolls later.</p>
+
+        <div class="exp-subhead">
+          Everything that happened outside the RTL
         </div>
 
+
         <div class="exp-story">
-          <p>Somewhere in the first half of the internship came a session with nothing to do with FPGAs at all — a <strong>geopolitics discussion and debate</strong>, exactly the kind I enjoy, since I try to keep up with what's happening around the world anyway. The motion on the table: <em>"AI systems should never be allowed to make life-and-death decisions."</em> I objected — not to the caution behind it, but to the word <strong>"never."</strong></p>
+
+          <p>
+            Beyond the register maps and the AXI handshakes, the eYantra team packed the internship with sessions that had nothing to do with our own project and everything to do with becoming a slightly more well-rounded engineer — talks that pulled us into robotics, AI, hardware, and a few things none of us saw coming.
+          </p>
+
+          <p>
+            <strong>Prof. Shivaram Kalyanakrishnan's</strong>
+            session on
+            <strong>"On Learning"</strong>
+            is the one that's stuck the longest — it nudged the whole room to actually sit with the question of what algorithm is quietly running behind every single tap on your smartphone, and how it eventually turns into the ad you see two scrolls later.
+          </p>
+
+        </div>
+
+
+        <div class="exp-story">
+
+          <p>
+            Somewhere in the first half of the internship came a session with nothing to do with FPGAs at all — a
+            <strong>geopolitics discussion and debate</strong>,
+            exactly the kind I enjoy, since I try to keep up with what's happening around the world anyway.
+            The motion on the table:
+            <em>"AI systems should never be allowed to make life-and-death decisions."</em>
+            I objected — not to the caution behind it, but to the word
+            <strong>"never."</strong>
+          </p>
+
           <div class="exp-quote">
-            <p>"Both AI and human judgment deserve a seat at that table — but the final call has to stay with a human being. Ruling the machine out entirely felt like the wrong kind of certainty."</p>
+
+            <p>
+              "Both AI and human judgment deserve a seat at that table — but the final call has to stay with a human being. Ruling the machine out entirely felt like the wrong kind of certainty."
+            </p>
+
           </div>
+
         </div>
 
+
         <div class="photo-gallery">
+
           <div class="photo-item wide">
-            <img src="geopolitics.JPG" alt="Geopolitics debate session at IIT Bombay" />
-            <div class="photo-caption">Geopolitics with admiral Anil Chopra</div>
+
+            <img
+              src="geopolitics.JPG"
+              alt="Geopolitics debate session at IIT Bombay"
+            />
+
+            <div class="photo-caption">
+              Geopolitics with admiral Anil Chopra
+            </div>
+
           </div>
+
         </div>
+
 
         <div class="exp-story">
-          <p>Then came the once-in-a-lifetime part. A visit to the <strong>Naval Dockyard, Mumbai</strong>, and the chance to actually step inside <strong>INS Vagsheer</strong> — a real, active-service submarine of the Indian Navy. Walking through it and seeing how tightly everything is packed and engineered was the kind of stunned-silence moment no lecture could replicate. On <strong>INS Trishul</strong>, a naval officer patiently walked us through how the turbines fire up and how the radar systems track — generous with time and detail for a bunch of interns clearly out of their depth.</p>
+
+          <p>
+            Then came the once-in-a-lifetime part. A visit to the
+            <strong>Naval Dockyard, Mumbai</strong>,
+            and the chance to actually step inside
+            <strong>INS Vagsheer</strong>
+            — a real, active-service submarine of the Indian Navy.
+            Walking through it and seeing how tightly everything is packed and engineered was the kind of stunned-silence moment no lecture could replicate.
+            On <strong>INS Trishul</strong>,
+            a naval officer patiently walked us through how the turbines fire up and how the radar systems track — generous with time and detail for a bunch of interns clearly out of their depth.
+          </p>
+
         </div>
 
+
         <div class="photo-gallery">
+
           <div class="photo-item">
-            <img src="naval_dockyard.jpg" alt="Inside INS Vagsheer submarine at Naval Dockyard Mumbai" />
-            <div class="photo-caption">Naval Dockyard Mumbai </div>
+
+            <img
+              src="naval_dockyard.jpg"
+              alt="Inside INS Vagsheer submarine at Naval Dockyard Mumbai"
+            />
+
+            <div class="photo-caption">
+              Naval Dockyard Mumbai
+            </div>
+
           </div>
+
         </div>
 
+
         <div class="exp-story">
-          <p>And then there was just <strong>IIT Bombay</strong> itself — the whole environment of it. Long conversations with fellow interns about their wildly different projects, a walk through <strong>Sameer Hills</strong>, the quiet climb up to the <strong>Elephanta Caves</strong>, a night cycling ride along <strong>Marine Drive</strong>, and getting properly soaked in a real <strong>Mumbai monsoon</strong> at least once. None of it was on the internship syllabus. All of it is the part I'll remember longest.</p>
+
+          <p>
+            And then there was just
+            <strong>IIT Bombay</strong>
+            itself — the whole environment of it.
+            Long conversations with fellow interns about their wildly different projects, a walk through
+            <strong>Sameer Hills</strong>,
+            the quiet climb up to the
+            <strong>Elephanta Caves</strong>,
+            a night cycling ride along
+            <strong>Marine Drive</strong>,
+            and getting properly soaked in a real
+            <strong>Mumbai monsoon</strong>
+            at least once.
+            None of it was on the internship syllabus.
+            All of it is the part I'll remember longest.
+          </p>
+
         </div>
+
 
         <div class="photo-gallery">
+
           <div class="photo-item wide">
-            <img src="iitb.jpeg" alt="IIT Bombay campus" />
-            <div class="photo-caption">IIT Bombay — campus life</div>
+
+            <img
+              src="iitb.jpeg"
+              alt="IIT Bombay campus"
+            />
+
+            <div class="photo-caption">
+              IIT Bombay — campus life
+            </div>
+
           </div>
+
         </div>
 
+
         <div class="exp-story">
-          <p>If two months at IIT Bombay left me with one sentence to carry forward, it's something <strong>Prof. Shivaram Kalyanakrishnan</strong> said almost in passing, like an aside that turned out to matter more than the main point.</p>
+
+          <p>
+            If two months at IIT Bombay left me with one sentence to carry forward, it's something
+            <strong>Prof. Shivaram Kalyanakrishnan</strong>
+            said almost in passing, like an aside that turned out to matter more than the main point.
+          </p>
+
           <div class="exp-quote green-quote">
-            <p>"You are in charge. No matter how it goes — up or down — you take responsibility for your own."</p>
+
+            <p>
+              "You are in charge. No matter how it goes — up or down — you take responsibility for your own."
+            </p>
+
           </div>
+
         </div>
+
 
         <div class="exp-tags-row">
+
           <span class="exp-tag">eYSIP 2026</span>
           <span class="exp-tag">IIT Bombay</span>
           <span class="exp-tag">PYNQ-Z2</span>
@@ -310,65 +1881,245 @@
           <span class="exp-tag">Naval Dockyard</span>
           <span class="exp-tag">ML on FPGA</span>
           <span class="exp-tag">Teamwork</span>
+
         </div>
+
       </div>
+
     </div>
 
-    <div class="exp-connector"><div class="connector-line"></div></div>
 
-    <!-- EYANTRA -->
+    <div class="exp-connector">
+      <div class="connector-line"></div>
+    </div>
+
+
+    <!-- =======================================================
+         EYANTRA
+    ======================================================== -->
+
     <div class="exp-card" id="eyantra">
+
       <div class="exp-card-header">
-        <div class="exp-icon eyantra">🤖</div>
+
+        <div class="exp-icon eyantra">
+          🤖
+        </div>
+
         <div class="exp-header-meta">
-          <div class="exp-org">IIT Bombay · National Robotics Competition</div>
-          <div class="exp-title">eYantra Robotics Competition</div>
-          <div class="exp-sub">8-month journey from Verilog simulations to a physical bot at IIT Bombay</div>
+
+          <div class="exp-org">
+            IIT Bombay · National Robotics Competition
+          </div>
+
+          <div class="exp-title">
+            eYantra Robotics Competition
+          </div>
+
+          <div class="exp-sub">
+            8-month journey from Verilog simulations to a physical bot at IIT Bombay
+          </div>
+
         </div>
+
         <div class="exp-badge-group">
-          <span class="exp-badge badge-green">AIR 5 · Nationals</span>
-          <span class="exp-badge badge-purple">Finals — IIT Bombay</span>
+
+          <span class="exp-badge badge-green">
+            AIR 5 · Nationals
+          </span>
+
+          <span class="exp-badge badge-purple">
+            Finals — IIT Bombay
+          </span>
+
         </div>
+
       </div>
+
+
       <div class="exp-card-body">
+
+
         <div class="exp-story">
-          <p>Eight months of eYantra. <strong>AIR 5 at the nationals.</strong></p>
-          <p>It started with simulation tasks — writing Verilog code for interfacing the ultrasonic sensor and DHT11 sensor, designing a <strong>custom CPU architecture from scratch</strong>, and implementing a maze exploration algorithm. Just code, and a lot of wondering about LUTs, registers, and how to optimize them.</p>
-          <p>Hardware kit arrived upon getting selected for Stage 2. Intel De0-Nano FPGA board, sensors, motors — and suddenly everything we had simulated had to actually work in the real world. We started assembling with cardboard to get the weight distribution right, then came the <strong>3D printed arm designed in Fusion 360</strong>, and an acrylic sheet base. Together they completely threw off the balance we'd spent days calibrating.</p>
-          <p>As the tasks levelled up, the simulation-to-real gap hit harder than expected. Ultrasonic sensors giving ghost readings. Interfacing temperature, humidity, and soil moisture sensors on FPGA while simultaneously handling motor control and Bluetooth communication in parallel. <strong>There were nights where nothing worked and giving up felt like the logical option.</strong></p>
+
+          <p>
+            Eight months of eYantra.
+            <strong>AIR 5 at the nationals.</strong>
+          </p>
+
+          <p>
+            It started with simulation tasks — writing Verilog code for interfacing the ultrasonic sensor and DHT11 sensor, designing a
+            <strong>custom CPU architecture from scratch</strong>,
+            and implementing a maze exploration algorithm.
+            Just code, and a lot of wondering about LUTs, registers, and how to optimize them.
+          </p>
+
+          <p>
+            Hardware kit arrived upon getting selected for Stage 2.
+            Intel De0-Nano FPGA board, sensors, motors — and suddenly everything we had simulated had to actually work in the real world.
+            We started assembling with cardboard to get the weight distribution right, then came the
+            <strong>3D printed arm designed in Fusion 360</strong>,
+            and an acrylic sheet base.
+            Together they completely threw off the balance we'd spent days calibrating.
+          </p>
+
+          <p>
+            As the tasks levelled up, the simulation-to-real gap hit harder than expected.
+            Ultrasonic sensors giving ghost readings.
+            Interfacing temperature, humidity, and soil moisture sensors on FPGA while simultaneously handling motor control and Bluetooth communication in parallel.
+            <strong>There were nights where nothing worked and giving up felt like the logical option.</strong>
+          </p>
 
           <div class="exp-quote">
-            <p>"And right in the middle of it all, slowly, it all started coming together. The bot ran. Not perfectly at first — then better — then good enough to take to the finals."</p>
+
+            <p>
+              "And right in the middle of it all, slowly, it all started coming together. The bot ran. Not perfectly at first — then better — then good enough to take to the finals."
+            </p>
+
           </div>
 
-          <p>Getting selected for the finals meant traveling to <strong>Indian Institute of Technology, Bombay</strong>. That's where the journey gave something beyond the competition — the chance to meet eSim summer fellowship mentor <strong>Sumanto Kar</strong> sir in person, alongside Sri. Varad Patil sir. A genuinely humble and warm environment.</p>
-          <p>What 8 months of eYantra actually built: patience, persistence, problem solving, and the ability to learn from every failure. None of this would have been possible alone — through every failed build, every late night, it was the team of <strong>Naveen Kumar B, Hemanth S,</strong> and <strong>R Kishore</strong> that kept things moving.</p>
+          <p>
+            Getting selected for the finals meant traveling to
+            <strong>Indian Institute of Technology, Bombay</strong>.
+            That's where the journey gave something beyond the competition — the chance to meet eSim summer fellowship mentor
+            <strong>Sumanto Kar</strong>
+            sir in person, alongside Sri. Varad Patil sir.
+            A genuinely humble and warm environment.
+          </p>
+
+          <p>
+            What 8 months of eYantra actually built:
+            patience, persistence, problem solving, and the ability to learn from every failure.
+            None of this would have been possible alone — through every failed build, every late night, it was the team of
+            <strong>Naveen Kumar B, Hemanth S,</strong>
+            and
+            <strong>R Kishore</strong>
+            that kept things moving.
+          </p>
+
         </div>
+
 
         <div class="exp-highlights">
-          <div class="exp-highlights-title">Key milestones</div>
-          <div class="highlights-grid">
-            <div class="highlight-item"><div class="highlight-dot green"></div><div class="highlight-text"><strong>Custom CPU architecture</strong> designed from scratch in Verilog</div></div>
-            <div class="highlight-item"><div class="highlight-dot green"></div><div class="highlight-text"><strong>Intel De0-Nano FPGA</strong> with real sensor & motor integration</div></div>
-            <div class="highlight-item"><div class="highlight-dot green"></div><div class="highlight-text"><strong>Multi-sensor FPGA control</strong> — ultrasonic, DHT11, soil moisture in parallel</div></div>
-            <div class="highlight-item"><div class="highlight-dot green"></div><div class="highlight-text"><strong>3D printed arm</strong> modeled in Fusion 360 for hardware assembly</div></div>
-            <div class="highlight-item"><div class="highlight-dot green"></div><div class="highlight-text"><strong>Maze exploration algorithm</strong> implemented on FPGA</div></div>
-            <div class="highlight-item"><div class="highlight-dot green"></div><div class="highlight-text"><strong>AIR 5</strong> at the national finals held at IIT Bombay</div></div>
+
+          <div class="exp-highlights-title">
+            Key milestones
           </div>
+
+          <div class="highlights-grid">
+
+            <div class="highlight-item">
+
+              <div class="highlight-dot green"></div>
+
+              <div class="highlight-text">
+                <strong>Custom CPU architecture</strong>
+                designed from scratch in Verilog
+              </div>
+
+            </div>
+
+
+            <div class="highlight-item">
+
+              <div class="highlight-dot green"></div>
+
+              <div class="highlight-text">
+                <strong>Intel De0-Nano FPGA</strong>
+                with real sensor & motor integration
+              </div>
+
+            </div>
+
+
+            <div class="highlight-item">
+
+              <div class="highlight-dot green"></div>
+
+              <div class="highlight-text">
+                <strong>Multi-sensor FPGA control</strong>
+                — ultrasonic, DHT11, soil moisture in parallel
+              </div>
+
+            </div>
+
+
+            <div class="highlight-item">
+
+              <div class="highlight-dot green"></div>
+
+              <div class="highlight-text">
+                <strong>3D printed arm</strong>
+                modeled in Fusion 360 for hardware assembly
+              </div>
+
+            </div>
+
+
+            <div class="highlight-item">
+
+              <div class="highlight-dot green"></div>
+
+              <div class="highlight-text">
+                <strong>Maze exploration algorithm</strong>
+                implemented on FPGA
+              </div>
+
+            </div>
+
+
+            <div class="highlight-item">
+
+              <div class="highlight-dot green"></div>
+
+              <div class="highlight-text">
+                <strong>AIR 5</strong>
+                at the national finals held at IIT Bombay
+              </div>
+
+            </div>
+
+          </div>
+
         </div>
+
+
+        <!-- PHOTO SIDE -->
 
         <div class="photo-gallery">
+
           <div class="photo-item">
-            <img src="eyrc_me.jpeg" alt="Sabarish at eYantra finals with certificate" />
-            <div class="photo-caption">Certificate — Grand Finals</div>
+
+            <img
+              src="eyrc_me.jpeg"
+              alt="Sabarish at eYantra finals with certificate"
+            />
+
+            <div class="photo-caption">
+              Certificate — Grand Finals
+            </div>
+
           </div>
+
+
           <div class="photo-item wide">
-            <img src="AF206834.JPG" alt="Team at eYantra finals with the bot" />
-            <div class="photo-caption">The team & bot — IIT Bombay</div>
+
+            <img
+              src="AF206834.JPG"
+              alt="Team at eYantra finals with the bot"
+            />
+
+            <div class="photo-caption">
+              The team & bot — IIT Bombay
+            </div>
+
           </div>
+
         </div>
 
+
         <div class="exp-tags-row">
+
           <span class="exp-tag">Intel De0-Nano FPGA</span>
           <span class="exp-tag">Verilog HDL</span>
           <span class="exp-tag">Fusion 360</span>
@@ -378,52 +2129,193 @@
           <span class="exp-tag">Motor Control</span>
           <span class="exp-tag">Maze Algorithm</span>
           <span class="exp-tag">IIT Bombay</span>
+
         </div>
+
       </div>
+
     </div>
 
-    <div class="exp-connector"><div class="connector-line"></div></div>
 
-    <!-- DVCON -->
+    <div class="exp-connector">
+      <div class="connector-line"></div>
+    </div>
+
+
+    <!-- =======================================================
+         DVCON
+    ======================================================== -->
+
     <div class="exp-card" id="dvcon">
+
       <div class="exp-card-header">
-        <div class="exp-icon dvcon">🎓</div>
+
+        <div class="exp-icon dvcon">
+          🎓
+        </div>
+
         <div class="exp-header-meta">
-          <div class="exp-org">Radisson Blu, Marathahalli · Design & Verification Conference</div>
-          <div class="exp-title">DVCon India 2025 — Fellowship</div>
-          <div class="exp-sub">Selected delegate at India's premier ASIC/SoC design & verification conference</div>
+
+          <div class="exp-org">
+            Radisson Blu, Marathahalli · Design & Verification Conference
+          </div>
+
+          <div class="exp-title">
+            DVCon India 2025 — Fellowship
+          </div>
+
+          <div class="exp-sub">
+            Selected delegate at India's premier ASIC/SoC design & verification conference
+          </div>
+
         </div>
+
         <div class="exp-badge-group">
-          <span class="exp-badge badge-purple">Fellowship · Selected</span>
-          <span class="exp-badge badge-amber">10–11 September</span>
+
+          <span class="exp-badge badge-purple">
+            Fellowship · Selected
+          </span>
+
+          <span class="exp-badge badge-amber">
+            10–11 September
+          </span>
+
         </div>
+
       </div>
+
+
       <div class="exp-card-body">
+
+
         <div class="exp-story">
-          <p><strong>Sabarish Mohan JS and Hemanth S</strong> got selected for the Fellowship Opportunity at DVCon India 2025, held at Radisson Blu, Marathahalli on 10–11 September.</p>
-          <p>DVCon (Design and Verification Conference) is one of the premier conferences in the semiconductor industry, bringing together professionals, researchers, and students to explore cutting-edge advancements in <strong>ASIC/SoC design, verification methodologies, and EDA tool innovations</strong>. It provided a unique platform to learn, network, and exchange ideas with leaders shaping the future of chip design.</p>
+
+          <p>
+            <strong>Sabarish Mohan JS and Hemanth S</strong>
+            got selected for the Fellowship Opportunity at DVCon India 2025, held at Radisson Blu, Marathahalli on 10–11 September.
+          </p>
+
+          <p>
+            DVCon (Design and Verification Conference) is one of the premier conferences in the semiconductor industry, bringing together professionals, researchers, and students to explore cutting-edge advancements in
+            <strong>ASIC/SoC design, verification methodologies, and EDA tool innovations</strong>.
+            It provided a unique platform to learn, network, and exchange ideas with leaders shaping the future of chip design.
+          </p>
+
         </div>
+
 
         <div class="exp-highlights">
-          <div class="exp-highlights-title">Experience highlights</div>
-          <div class="highlights-grid">
-            <div class="highlight-item"><div class="highlight-dot"></div><div class="highlight-text">Attended a <strong>Real-Time Handwriting Detection using HAPS-200</strong> short workshop conducted by Nilesh Shilankar, Synopsys Inc.</div></div>
-            <div class="highlight-item"><div class="highlight-dot"></div><div class="highlight-text">Gained insights from <strong>CircuitSutra Technologies</strong> — Supercharge your RISC-V designs with higher abstraction & shift-left methodology, by Ayush Mewati and Saswat Mund.</div></div>
-            <div class="highlight-item"><div class="highlight-dot"></div><div class="highlight-text">Interacted with <strong>DVCon 2025 Design Contest finalists</strong>, learning about hardware acceleration techniques like tiled matrix multiplications and systolic arrays.</div></div>
-            <div class="highlight-item"><div class="highlight-dot"></div><div class="highlight-text">Explored company products automating parts of the <strong>ASIC flow</strong> — e.g. Circuit Sutra's CST_ISS (Instruction Set Simulation).</div></div>
-            <div class="highlight-item"><div class="highlight-dot"></div><div class="highlight-text">Meaningful discussion on career opportunities in <strong>VLSI front-end design</strong> with Dhanush Babu Pasupuleti and K Saketh from ASOCSEMI.</div></div>
-            <div class="highlight-item"><div class="highlight-dot"></div><div class="highlight-text">Broadened perspective on <strong>VLSI design, verification, and hardware acceleration</strong> techniques through industry leader sessions.</div></div>
+
+          <div class="exp-highlights-title">
+            Experience highlights
           </div>
+
+          <div class="highlights-grid">
+
+            <div class="highlight-item">
+
+              <div class="highlight-dot"></div>
+
+              <div class="highlight-text">
+                Attended a
+                <strong>Real-Time Handwriting Detection using HAPS-200</strong>
+                short workshop conducted by Nilesh Shilankar, Synopsys Inc.
+              </div>
+
+            </div>
+
+
+            <div class="highlight-item">
+
+              <div class="highlight-dot"></div>
+
+              <div class="highlight-text">
+                Gained insights from
+                <strong>CircuitSutra Technologies</strong>
+                — Supercharge your RISC-V designs with higher abstraction & shift-left methodology, by Ayush Mewati and Saswat Mund.
+              </div>
+
+            </div>
+
+
+            <div class="highlight-item">
+
+              <div class="highlight-dot"></div>
+
+              <div class="highlight-text">
+                Interacted with
+                <strong>DVCon 2025 Design Contest finalists</strong>,
+                learning about hardware acceleration techniques like tiled matrix multiplications and systolic arrays.
+              </div>
+
+            </div>
+
+
+            <div class="highlight-item">
+
+              <div class="highlight-dot"></div>
+
+              <div class="highlight-text">
+                Explored company products automating parts of the
+                <strong>ASIC flow</strong>
+                — e.g. Circuit Sutra's CST_ISS (Instruction Set Simulation).
+              </div>
+
+            </div>
+
+
+            <div class="highlight-item">
+
+              <div class="highlight-dot"></div>
+
+              <div class="highlight-text">
+                Meaningful discussion on career opportunities in
+                <strong>VLSI front-end design</strong>
+                with Dhanush Babu Pasupuleti and K Saketh from ASOCSEMI.
+              </div>
+
+            </div>
+
+
+            <div class="highlight-item">
+
+              <div class="highlight-dot"></div>
+
+              <div class="highlight-text">
+                Broadened perspective on
+                <strong>VLSI design, verification, and hardware acceleration</strong>
+                techniques through industry leader sessions.
+              </div>
+
+            </div>
+
+          </div>
+
         </div>
+
+
+        <!-- PHOTO SIDE -->
 
         <div class="photo-gallery">
+
           <div class="photo-item wide">
-            <img src="dvcon_me.jpeg" alt="Sabarish at DVCon India 2025 banner" />
-            <div class="photo-caption">DVCon India 2025 — Bangalore</div>
+
+            <img
+              src="dvcon_me.jpeg"
+              alt="Sabarish at DVCon India 2025 banner"
+            />
+
+            <div class="photo-caption">
+              DVCon India 2025 — Bangalore
+            </div>
+
           </div>
+
         </div>
 
+
         <div class="exp-tags-row">
+
           <span class="exp-tag">ASIC/SoC Design</span>
           <span class="exp-tag">Verification Methodologies</span>
           <span class="exp-tag">RISC-V</span>
@@ -433,59 +2325,219 @@
           <span class="exp-tag">Systolic Arrays</span>
           <span class="exp-tag">Hardware Acceleration</span>
           <span class="exp-tag">VLSI Front-end</span>
+
         </div>
+
       </div>
+
     </div>
 
-    <div class="exp-connector"><div class="connector-line"></div></div>
 
-    <!-- FOSSEE / eSim -->
+    <div class="exp-connector">
+      <div class="connector-line"></div>
+    </div>
+
+
+    <!-- =======================================================
+         FOSSEE / eSim
+    ======================================================== -->
+
     <div class="exp-card" id="fossee">
+
       <div class="exp-card-header">
-        <div class="exp-icon fossee">⚙️</div>
+
+        <div class="exp-icon fossee">
+          ⚙️
+        </div>
+
         <div class="exp-header-meta">
-          <div class="exp-org">IIT Bombay · FOSSEE Initiative</div>
-          <div class="exp-title">eSim Summer Fellowship 2025</div>
-          <div class="exp-sub">Open-source EDA contribution — 10+ digital IC subcircuits added to eSim's main library</div>
+
+          <div class="exp-org">
+            IIT Bombay · FOSSEE Initiative
+          </div>
+
+          <div class="exp-title">
+            eSim Summer Fellowship 2025
+          </div>
+
+          <div class="exp-sub">
+            Open-source EDA contribution — 10+ digital IC subcircuits added to eSim's main library
+          </div>
+
         </div>
+
         <div class="exp-badge-group">
-          <span class="exp-badge badge-amber">FOSSEE · IIT Bombay</span>
-          <span class="exp-badge badge-green">Open Source · 10+ ICs</span>
+
+          <span class="exp-badge badge-amber">
+            FOSSEE · IIT Bombay
+          </span>
+
+          <span class="exp-badge badge-green">
+            Open Source · 10+ ICs
+          </span>
+
         </div>
+
       </div>
+
+
       <div class="exp-card-body">
+
+
         <div class="exp-story">
-          <p>This summer was more than just learning — it was about <strong>contributing</strong>.</p>
-          <p>Selected for the <strong>FOSSEE Summer Fellowship 2025</strong> at the Indian Institute of Technology, Bombay, with the opportunity to contribute ICs to the main library of <strong>eSim</strong>, an open-source EDA tool.</p>
-          <p>Worked on implementing more than <strong>10 digital ICs</strong> based on their datasheets. The subcircuits of the IC schematics were created to be simple yet reusable for many future designs. Finally, the validation of these circuits was carried out through custom test circuits that verified their actual functionality — adding meaningfulness to the contribution.</p>
+
+          <p>
+            This summer was more than just learning — it was about
+            <strong>contributing</strong>.
+          </p>
+
+          <p>
+            Selected for the
+            <strong>FOSSEE Summer Fellowship 2025</strong>
+            at the Indian Institute of Technology, Bombay, with the opportunity to contribute ICs to the main library of
+            <strong>eSim</strong>,
+            an open-source EDA tool.
+          </p>
+
+          <p>
+            Worked on implementing more than
+            <strong>10 digital ICs</strong>
+            based on their datasheets.
+            The subcircuits of the IC schematics were created to be simple yet reusable for many future designs.
+            Finally, the validation of these circuits was carried out through custom test circuits that verified their actual functionality — adding meaningfulness to the contribution.
+          </p>
 
           <div class="exp-quote">
-            <p>"It has always been a privilege to contribute to open source. Though it was a small technical contribution, it brings immense satisfaction."</p>
+
+            <p>
+              "It has always been a privilege to contribute to open source. Though it was a small technical contribution, it brings immense satisfaction."
+            </p>
+
           </div>
 
-          <p>Grateful to the entire FOSSEE team and <strong>Prof. Kannan Moudgalya</strong> for creating such a significant initiative, and to mentor <strong>Sumanto Kar</strong> sir for his continuous support and for shaping this journey into a valuable experience.</p>
+          <p>
+            Grateful to the entire FOSSEE team and
+            <strong>Prof. Kannan Moudgalya</strong>
+            for creating such a significant initiative, and to mentor
+            <strong>Sumanto Kar</strong>
+            sir for his continuous support and for shaping this journey into a valuable experience.
+          </p>
+
         </div>
+
 
         <div class="exp-highlights">
-          <div class="exp-highlights-title">What was built</div>
-          <div class="highlights-grid">
-            <div class="highlight-item"><div class="highlight-dot amber"></div><div class="highlight-text"><strong>10+ digital IC subcircuits</strong> implemented based on official datasheets</div></div>
-            <div class="highlight-item"><div class="highlight-dot amber"></div><div class="highlight-text">Schematics designed to be <strong>simple, reusable, and future-proof</strong> for designers</div></div>
-            <div class="highlight-item"><div class="highlight-dot amber"></div><div class="highlight-text">Each IC validated through <strong>custom test circuits</strong> verifying real functionality</div></div>
-            <div class="highlight-item"><div class="highlight-dot amber"></div><div class="highlight-text">Contribution merged into the <strong>main eSim library</strong> — accessible to all users</div></div>
-            <div class="highlight-item"><div class="highlight-dot amber"></div><div class="highlight-text">Worked with <strong>KiCad</strong> for schematic entry and <strong>NgSpice</strong> for simulation</div></div>
-            <div class="highlight-item"><div class="highlight-dot amber"></div><div class="highlight-text">Report published and available via <strong>lnkd.in/guU-vzzj</strong></div></div>
+
+          <div class="exp-highlights-title">
+            What was built
           </div>
+
+          <div class="highlights-grid">
+
+            <div class="highlight-item">
+
+              <div class="highlight-dot amber"></div>
+
+              <div class="highlight-text">
+                <strong>10+ digital IC subcircuits</strong>
+                implemented based on official datasheets
+              </div>
+
+            </div>
+
+
+            <div class="highlight-item">
+
+              <div class="highlight-dot amber"></div>
+
+              <div class="highlight-text">
+                Schematics designed to be
+                <strong>simple, reusable, and future-proof</strong>
+                for designers
+              </div>
+
+            </div>
+
+
+            <div class="highlight-item">
+
+              <div class="highlight-dot amber"></div>
+
+              <div class="highlight-text">
+                Each IC validated through
+                <strong>custom test circuits</strong>
+                verifying real functionality
+              </div>
+
+            </div>
+
+
+            <div class="highlight-item">
+
+              <div class="highlight-dot amber"></div>
+
+              <div class="highlight-text">
+                Contribution merged into the
+                <strong>main eSim library</strong>
+                — accessible to all users
+              </div>
+
+            </div>
+
+
+            <div class="highlight-item">
+
+              <div class="highlight-dot amber"></div>
+
+              <div class="highlight-text">
+                Worked with
+                <strong>KiCad</strong>
+                for schematic entry and
+                <strong>NgSpice</strong>
+                for simulation
+              </div>
+
+            </div>
+
+
+            <div class="highlight-item">
+
+              <div class="highlight-dot amber"></div>
+
+              <div class="highlight-text">
+                Report published and available via
+                <strong>lnkd.in/guU-vzzj</strong>
+              </div>
+
+            </div>
+
+          </div>
+
         </div>
+
+
+        <!-- PHOTO SIDE -->
 
         <div class="photo-gallery">
+
           <div class="photo-item wide">
-            <img src="sumanto.jpeg" alt="Sabarish with mentor Sumanto Kar at IIT Bombay" />
-            <div class="photo-caption">With Sumanto Kar sir — IIT Bombay</div>
+
+            <img
+              src="sumanto.jpeg"
+              alt="Sabarish with mentor Sumanto Kar at IIT Bombay"
+            />
+
+            <div class="photo-caption">
+              With Sumanto Kar sir — IIT Bombay
+            </div>
+
           </div>
+
         </div>
 
+
         <div class="exp-tags-row">
+
           <span class="exp-tag">eSim</span>
           <span class="exp-tag">FOSSEE</span>
           <span class="exp-tag">IIT Bombay</span>
@@ -495,44 +2547,224 @@
           <span class="exp-tag">Open Source</span>
           <span class="exp-tag">EDA</span>
           <span class="exp-tag">Datasheet Implementation</span>
+
         </div>
+
       </div>
+
     </div>
 
   </div>
 
+
+  <!-- =========================================================
+       FOOTER
+  ========================================================= -->
+
   <footer>
-    <div class="footer-logo">SM/</div>
-    <p>© 2025 Sabarish Mohan JS — Built with passion & code.</p>
-    <p>Chennai, Tamil Nadu 🇮🇳</p>
+
+    <div class="footer-logo">
+      SM/
+    </div>
+
+    <p>
+      © 2025 Sabarish Mohan JS — Built with passion & code.
+    </p>
+
+    <p>
+      Chennai, Tamil Nadu 🇮🇳
+    </p>
+
   </footer>
 
+
+  <!-- =========================================================
+       JAVASCRIPT
+  ========================================================= -->
+
   <script>
-    const cursor = document.getElementById('cursor');
-    const ring = document.getElementById('cursorRing');
-    let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
-    document.addEventListener('mousemove', e => {
-      mouseX = e.clientX; mouseY = e.clientY;
-      cursor.style.left = mouseX - 6 + 'px';
-      cursor.style.top = mouseY - 6 + 'px';
-    });
+
+    /* =========================================================
+       CURSOR
+    ========================================================= */
+
+    const cursor =
+      document.getElementById('cursor');
+
+    const ring =
+      document.getElementById('cursorRing');
+
+    let mouseX = 0;
+    let mouseY = 0;
+
+    let ringX = 0;
+    let ringY = 0;
+
+
+    document.addEventListener(
+      'mousemove',
+      e => {
+
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+
+        cursor.style.left =
+          mouseX - 5 + 'px';
+
+        cursor.style.top =
+          mouseY - 5 + 'px';
+
+      }
+    );
+
+
     function animateRing() {
-      ringX += (mouseX - ringX - 18) * 0.12;
-      ringY += (mouseY - ringY - 18) * 0.12;
-      ring.style.left = ringX + 'px';
-      ring.style.top = ringY + 'px';
-      requestAnimationFrame(animateRing);
+
+      ringX +=
+        (mouseX - ringX - 17) * 0.12;
+
+      ringY +=
+        (mouseY - ringY - 17) * 0.12;
+
+      ring.style.left =
+        ringX + 'px';
+
+      ring.style.top =
+        ringY + 'px';
+
+      requestAnimationFrame(
+        animateRing
+      );
+
     }
+
     animateRing();
-    document.querySelectorAll('a, button').forEach(el => {
-      el.addEventListener('mouseenter', () => { cursor.style.transform = 'scale(2)'; ring.style.opacity = '0'; });
-      el.addEventListener('mouseleave', () => { cursor.style.transform = 'scale(1)'; ring.style.opacity = '0.5'; });
+
+
+    /* =========================================================
+       CURSOR HOVER
+    ========================================================= */
+
+    document
+      .querySelectorAll('a, button, .photo-item, .exp-tag')
+      .forEach(el => {
+
+        el.addEventListener(
+          'mouseenter',
+          () => {
+
+            cursor.style.transform =
+              'scale(2)';
+
+            ring.style.opacity =
+              '0';
+
+          }
+        );
+
+        el.addEventListener(
+          'mouseleave',
+          () => {
+
+            cursor.style.transform =
+              'scale(1)';
+
+            ring.style.opacity =
+              '0.45';
+
+          }
+        );
+
+      });
+
+
+    /* =========================================================
+       CARD REVEAL
+    ========================================================= */
+
+    const cards =
+      document.querySelectorAll(
+        '.exp-card'
+      );
+
+    const observer =
+      new IntersectionObserver(
+        entries => {
+
+          entries.forEach(e => {
+
+            if (
+              e.isIntersecting
+            ) {
+
+              e.target.classList.add(
+                'visible'
+              );
+
+              observer.unobserve(
+                e.target
+              );
+
+            }
+
+          });
+
+        },
+        {
+          threshold: 0.08
+        }
+      );
+
+
+    cards.forEach(card => {
+
+      observer.observe(card);
+
     });
-    const cards = document.querySelectorAll('.exp-card');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.08 });
-    cards.forEach(c => observer.observe(c));
+
+
+    /* =========================================================
+       IMAGE PARALLAX
+    ========================================================= */
+
+    window.addEventListener(
+      'scroll',
+      () => {
+
+        document
+          .querySelectorAll(
+            '.photo-item img'
+          )
+          .forEach(img => {
+
+            const rect =
+              img.getBoundingClientRect();
+
+            if (
+              rect.top <
+                window.innerHeight &&
+              rect.bottom > 0
+            ) {
+
+              const distance =
+                window.innerHeight / 2 -
+                (
+                  rect.top +
+                  rect.height / 2
+                );
+
+              img.style.transform =
+                `translateY(${distance * 0.015}px)`;
+
+            }
+
+          });
+
+      }
+    );
+
   </script>
+
 </body>
+
 </html>
